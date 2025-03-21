@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-
+import os
 
 #------------------ criar instancia do app Flask
 appSite = Flask(__name__)
@@ -12,8 +12,13 @@ appSite = Flask(__name__)
 # será usada no formulario com o metodo csrf.token. Ex.: form_criarconta.csrf_token
 appSite.config['SECRET_KEY'] = '3f0bdc99e942ccb11f7ca8658b982f0b'
 
-#---------------- configurar o acesso ao banco de dados
-appSite.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projeto4.db'
+#---------------- configurar o acesso ao banco de dados remoto (Railway)
+if os.getenv("DATABASE_URL"):
+    appSite.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+# ---------------- configurar o acesso ao banco de dados local
+else:
+    appSite.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projeto4.db'
+
 #para criar o banco de dados
 database = SQLAlchemy(appSite)
 
@@ -30,4 +35,3 @@ login_manager.login_message_category = 'alert-info'
 
 #deve ser importado nessa posicao pois as rotas precisam do appSite criado acima
 from projeto4flask import routes
-
