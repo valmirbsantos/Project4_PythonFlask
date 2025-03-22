@@ -33,5 +33,20 @@ login_manager.login_view = 'login'
 #categoria para a mensagem = pode ser customizada com login_manager.login_message
 login_manager.login_message_category = 'alert-info'
 
+##----- verificar se o database existe. Se nao existir, criar o DB com todas as
+#        tabelas do models.py
+import sqlalchemy
+from projeto4flask import models
+engine = sqlalchemy.create_engine(appSite.config['SQLALCHEMY_DATABASE_URI'])
+inspector = sqlalchemy.inspect(engine)
+## ------verifica se existe a tabela de usuarios no banco de dados
+if not inspector.has_table('usuario'):
+    with appSite.app_context():
+        #database.drop_all()
+        #database.create_all()
+        print('Banco de dados criado com sucesso')
+else:
+    print('Base de Dados já existe')
+
 #deve ser importado nessa posicao pois as rotas precisam do appSite criado acima
 from projeto4flask import routes
