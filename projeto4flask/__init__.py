@@ -14,6 +14,7 @@ appSite.config['SECRET_KEY'] = '3f0bdc99e942ccb11f7ca8658b982f0b'
 
 #---------------- configurar o acesso ao banco de dados remoto (Railway)
 if os.getenv("DATABASE_URL"):
+    print(os.getenv("DATABASE_URL"))
     appSite.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 # ---------------- configurar o acesso ao banco de dados local
 else:
