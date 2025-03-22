@@ -12,16 +12,13 @@ appSite = Flask(__name__)
 # será usada no formulario com o metodo csrf.token. Ex.: form_criarconta.csrf_token
 appSite.config['SECRET_KEY'] = '3f0bdc99e942ccb11f7ca8658b982f0b'
 
-#---------------- configurar o acesso ao banco de dados remoto (Railway)
-print("-="*60)
-print(os.getenv("DATABASE_URL"))
-print(os.getenv("POSTGRES_DB"))
-print("-="*60)
-if os.getenv("DATABASE_URL"):
-    appSite.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
-# ---------------- configurar o acesso ao banco de dados local
-else:
-    appSite.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projeto4.db'
+#---------------- configurar o acesso ao banco de dados remoto (Railway) - nao funcionou, nao encontra a variavel DATABASE_URL
+# if os.getenv("DATABASE_URL"):
+#     appSite.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+# # ---------------- configurar o acesso ao banco de dados local
+# else:
+#     appSite.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projeto4.db'
+appSite.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:pVnBnqbIUBkVBSFTKywutHTEwBXnytAE@postgres.railway.internal:5432/railway"
 
 #para criar o banco de dados
 database = SQLAlchemy(appSite)
@@ -39,18 +36,18 @@ login_manager.login_message_category = 'alert-info'
 
 ##----- verificar se o database existe. Se nao existir, criar o DB com todas as
 #        tabelas do models.py
-# import sqlalchemy
-# from projeto4flask import models
-# engine = sqlalchemy.create_engine(appSite.config['SQLALCHEMY_DATABASE_URI'])
-# inspector = sqlalchemy.inspect(engine)
-# ## ------verifica se existe a tabela de usuarios no banco de dados
-# if not inspector.has_table('usuario'):
-#     with appSite.app_context():
-#         database.drop_all()
-#         database.create_all()
-#         print('Banco de dados criado com sucesso')
-# else:
-#     print('Base de Dados já existe')
+import sqlalchemy
+from projeto4flask import models
+engine = sqlalchemy.create_engine(appSite.config['SQLALCHEMY_DATABASE_URI'])
+inspector = sqlalchemy.inspect(engine)
+## ------verifica se existe a tabela de usuarios no banco de dados
+if not inspector.has_table('usuario'):
+    with appSite.app_context():
+        database.drop_all()
+        database.create_all()
+        print('Banco de dados criado com sucesso')
+else:
+    print('Base de Dados já existe')
 
 #deve ser importado nessa posicao pois as rotas precisam do appSite criado acima
 from projeto4flask import routes
