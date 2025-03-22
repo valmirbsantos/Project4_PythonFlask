@@ -42,8 +42,8 @@ inspector = sqlalchemy.inspect(engine)
 ## ------verifica se existe a tabela de usuarios no banco de dados
 if not inspector.has_table('usuario'):
     with appSite.app_context():
-        #database.drop_all()
-        #database.create_all()
+        database.drop_all()
+        database.create_all()
         print('Banco de dados criado com sucesso')
 else:
     print('Base de Dados já existe')
