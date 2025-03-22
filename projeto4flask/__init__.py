@@ -20,6 +20,8 @@ appSite.config['SECRET_KEY'] = '3f0bdc99e942ccb11f7ca8658b982f0b'
 #     appSite.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///projeto4.db'
 print('-='*30)
 print(os.environ.get('DATABASE_URL'))
+print('.='*30)
+print(os.environ)
 print('-='*30)
 appSite.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:pVnBnqbIUBkVBSFTKywutHTEwBXnytAE@postgres.railway.internal:5432/railway"
 
