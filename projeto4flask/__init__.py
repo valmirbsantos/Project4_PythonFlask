@@ -25,6 +25,7 @@ print(os.environ)
 print('-='*30)
 appSite.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:pVnBnqbIUBkVBSFTKywutHTEwBXnytAE@postgres.railway.internal:5432/railway"
 
+
 #para criar o banco de dados
 database = SQLAlchemy(appSite)
 
