@@ -28,6 +28,8 @@ appSite.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:pVnBnqbIUBkVB
 #para criar o banco de dados
 database = SQLAlchemy(appSite)
 
+
+
 #----------------- cria instancia do bcrypt para usar no aplicativo
 # será aplicado no routes "criarconta" para criacao do usuario e no "login" para validar senha
 bcrypt = Bcrypt(appSite)
